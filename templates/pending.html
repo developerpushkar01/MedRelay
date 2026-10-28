@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Approval pending{% endblock %}
+{% block content %}
+<div class="empty-state">
+  <div class="empty-icon">⌛</div><h1 class="h3">Facility review in progress</h1>
+  <p class="text-secondary">Your facility <strong>{{ facility.name }}</strong> is currently marked <span class="badge text-bg-warning">{{ facility.status }}</span>.</p>
+  <p>An administrator must review your facility registration before inventory and transfer features become available.</p>
+  <p class="small text-secondary">If you believe this is taking too long, contact your project administrator.</p>
+</div>
+{% endblock %}

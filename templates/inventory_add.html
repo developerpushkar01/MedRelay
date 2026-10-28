@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Add inventory{% endblock %}
+{% block content %}
+<div class="form-shell"><h1 class="h2 fw-bold">Add inventory batch</h1><p class="text-secondary">Enter the actual batch and expiry details.</p>
+{% if not medicines %}<div class="alert alert-warning">The medicine catalogue is empty. <a href="{{ url_for('medicines') }}">Add a medicine first</a>.</div>{% endif %}
+<form method="post"><div class="mb-3"><label class="form-label">Medicine *</label><select class="form-select" name="medicine_id" required><option value="">Choose medicine…</option>{% for m in medicines %}<option value="{{ m.id }}">{{ m.name }} · {{ m.strength }} · {{ m.dosage_form }}</option>{% endfor %}</select></div><div class="mb-3"><label class="form-label">Batch number *</label><input class="form-control" name="batch_number" required maxlength="100"></div><div class="mb-3"><label class="form-label">Expiry date *</label><input class="form-control" type="date" name="expiry_date" required></div><div class="mb-3"><label class="form-label">Quantity on hand *</label><input class="form-control" type="number" name="quantity_on_hand" min="0" required></div><div class="mb-3"><label class="form-label">Stock condition *</label><select class="form-select" name="stock_condition"><option>Usable</option><option>Quarantined</option><option>Damaged</option></select></div><button class="btn btn-primary w-100" {% if not medicines %}disabled{% endif %}>Save inventory</button></form></div>
+{% endblock %}

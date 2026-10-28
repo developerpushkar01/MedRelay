@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="form-shell">
+  <h1 class="h2 fw-bold">Welcome back</h1><p class="text-secondary">Sign in to your MedRelay account.</p>
+  <form method="post">
+    <div class="mb-3"><label class="form-label">Email address</label><input class="form-control" type="email" name="email" required autocomplete="email"></div>
+    <div class="mb-3"><label class="form-label">Password</label><input class="form-control" type="password" name="password" required autocomplete="current-password"></div>
+    <button class="btn btn-primary w-100">Sign in</button>
+  </form>
+  <p class="mt-3 small text-secondary">New facility? <a href="{{ url_for('register') }}">Submit a registration request</a>.</p>
+</div>
+{% endblock %}

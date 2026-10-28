@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<div class="mb-4"><h1 class="h2 fw-bold">Inventory overview</h1><p class="text-secondary mb-0">A simple operational snapshot for your facility.</p></div>
+<div class="row g-3"><div class="col-md-3"><div class="stat-card"><div class="stat-label">Inventory batches</div><div class="stat-number">{{ total_items }}</div></div></div><div class="col-md-3"><div class="stat-card"><div class="stat-label">Low-stock batches</div><div class="stat-number">{{ low_stock }}</div><div class="small text-secondary">10 units or fewer available</div></div></div><div class="col-md-3"><div class="stat-card"><div class="stat-label">Near expiry</div><div class="stat-number">{{ near_expiry }}</div><div class="small text-secondary">Expires within 90 days</div></div></div><div class="col-md-3"><div class="stat-card"><div class="stat-label">Open requests</div><div class="stat-number">{{ open_requests }}</div></div></div></div>
+<div class="alert alert-info mt-4">These are basic counts, not a substitute for stock reconciliation or regulatory reporting.</div>
+{% endblock %}

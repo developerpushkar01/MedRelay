@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero-panel p-4 p-lg-5 mb-4">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-8">
+      <span class="eyebrow">HEALTHCARE RESOURCE COORDINATION</span>
+      <h1 class="display-5 fw-bold mt-3">The right medicine.<br><span class="text-accent">The right place. The right time.</span></h1>
+      <p class="lead mt-3 mb-4">MedRelay helps verified hospitals, clinics, and registered pharmacies discover available medicine stock and coordinate supply requests.</p>
+      {% if current_user.is_authenticated %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('dashboard') }}">Open dashboard</a>
+      {% else %}
+        <a class="btn btn-primary btn-lg me-2" href="{{ url_for('register') }}">Register a facility</a>
+        <a class="btn btn-outline-light btn-lg" href="{{ url_for('login') }}">Sign in</a>
+      {% endif %}
+    </div>
+    <div class="col-lg-4">
+      <div class="hero-icon">↔</div>
+      <p class="text-center small text-white-50 mt-2">A connected network of healthcare facilities</p>
+    </div>
+  </div>
+</section>
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Approved facilities</div><div class="stat-number">{{ stats.facilities }}</div></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Medicine catalogue entries</div><div class="stat-number">{{ stats.medicines }}</div></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Open requests</div><div class="stat-number">{{ stats.open_requests }}</div></div></div>
+</div>
+<div class="row g-3">
+  <div class="col-md-4"><div class="feature-card"><h3>📦 Inventory visibility</h3><p>Record batch-level quantities, expiry dates, and stock condition.</p></div></div>
+  <div class="col-md-4"><div class="feature-card"><h3>🔎 Supply matching</h3><p>Find eligible facilities with matching, usable, unexpired stock.</p></div></div>
+  <div class="col-md-4"><div class="feature-card"><h3>🚚 Transfer tracking</h3><p>Track offers, reservations, dispatches, and receipt confirmations.</p></div></div>
+</div>
+{% if demo_mode %}
+<section class="panel-card mt-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+    <div><p class="eyebrow text-primary mb-2">TRY THE LIVE DEMO</p><h2 class="h4 fw-bold">Explore MedRelay with sample accounts</h2><p class="text-secondary mb-3">These accounts and records are fictional. All demo accounts use the same password.</p></div>
+    <a class="btn btn-primary" href="{{ url_for('login') }}">Open demo login</a>
+  </div>
+  <div class="table-responsive"><table class="table table-sm align-middle mb-2"><thead><tr><th>Role</th><th>Demo email</th><th>Password</th></tr></thead><tbody>
+    <tr><td>Hospital</td><td><code>demo.hospital@medrelay.local</code></td><td><code>MedRelayDemo2026!</code></td></tr>
+    <tr><td>Clinic</td><td><code>demo.clinic@medrelay.local</code></td><td><code>MedRelayDemo2026!</code></td></tr>
+    <tr><td>Pharmacy</td><td><code>demo.pharmacy@medrelay.local</code></td><td><code>MedRelayDemo2026!</code></td></tr>
+    <tr><td>Medical centre</td><td><code>demo.centre@medrelay.local</code></td><td><code>MedRelayDemo2026!</code></td></tr>
+  </tbody></table></div>
+  <div class="alert alert-warning mb-0"><strong>Shared sandbox:</strong> Other visitors can use these same accounts and change demo records. Do not enter real personal, patient, facility, or medicine-supply information. Demo changes may reset after a restart or redeploy.</div>
+</section>
+{% endif %}
+<div class="alert alert-info mt-4 mb-0"><strong>Prototype notice:</strong> Facility registration is manually reviewed. Availability is self-reported and is not a guarantee that stock can be transferred. Use fictional data only; this is not a real-world medical logistics service.</div>
+{% endblock %}

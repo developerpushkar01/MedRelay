@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Open requests{% endblock %}
+{% block content %}
+<div class="mb-4"><p class="eyebrow text-primary">SUPPLY NETWORK</p><h1 class="h2 fw-bold">Open medicine requests</h1><p class="text-secondary mb-0">Browse requests from other approved facilities. Open a request to see whether your stock matches and make an offer.</p></div>
+<div class="panel-card p-0 table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Medicine</th><th>Requesting facility</th><th>Quantity remaining</th><th>Urgency</th><th>Required by</th><th>Priority</th><th></th></tr></thead><tbody>
+{% for r in requests %}<tr><td><strong>{{ r.medicine.name }}</strong><div class="small text-secondary">{{ r.medicine.strength }} · {{ r.medicine.dosage_form }}</div></td><td>{{ r.requesting_facility.name }}<div class="small text-secondary">{{ r.requesting_facility.city }}, {{ r.requesting_facility.state }}</div></td><td>{{ r.quantity_requested - r.quantity_fulfilled }} {{ r.medicine.unit }}</td><td><span class="badge {{ 'text-bg-danger' if r.urgency == 'Critical' else ('text-bg-warning' if r.urgency == 'High' else 'text-bg-secondary') }}">{{ r.urgency }}</span></td><td>{{ r.required_by.strftime('%d %b %Y, %H:%M') }} UTC</td><td><strong>{{ r.priority_score }}</strong></td><td><a class="btn btn-sm btn-primary" href="{{ url_for('request_detail', request_id=r.id) }}">View & offer</a></td></tr>{% else %}<tr><td colspan="7" class="text-center text-secondary py-5">No open requests from other facilities right now.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

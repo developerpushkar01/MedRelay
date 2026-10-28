@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Facility review{% endblock %}
+{% block content %}
+<div class="mb-4"><p class="eyebrow text-primary">ADMINISTRATION</p><h1 class="h2 fw-bold">Facility review</h1><p class="text-secondary">Review registration references using your approved external process.</p></div>
+<div class="table-responsive panel-card p-0"><table class="table align-middle mb-0"><thead><tr><th>Facility</th><th>Type</th><th>Location</th><th>Registration reference</th><th>Status</th><th>Action</th></tr></thead><tbody>
+{% for f in facilities %}<tr><td><strong>{{ f.name }}</strong><div class="small text-secondary">{{ f.address }}</div></td><td>{{ f.facility_type }}</td><td>{{ f.city }}, {{ f.state }}<div class="small text-secondary">{{ f.pincode }}</div></td><td>{{ f.registration_no }}</td><td><span class="badge {{ 'text-bg-warning' if f.status == 'Pending' else ('text-bg-success' if f.status == 'Approved' else 'text-bg-secondary') }}">{{ f.status }}</span></td><td><div class="d-flex flex-wrap gap-1">
+{% if f.status != 'Approved' %}<form method="post" action="{{ url_for('facility_action', facility_id=f.id, action='approve') }}"><button class="btn btn-sm btn-success">Approve</button></form>{% endif %}
+{% if f.status != 'Rejected' %}<form method="post" action="{{ url_for('facility_action', facility_id=f.id, action='reject') }}"><button class="btn btn-sm btn-outline-secondary">Reject</button></form>{% endif %}
+{% if f.status != 'Suspended' %}<form method="post" action="{{ url_for('facility_action', facility_id=f.id, action='suspend') }}"><button class="btn btn-sm btn-outline-danger">Suspend</button></form>{% endif %}
+</div></td></tr>{% else %}<tr><td colspan="6" class="text-center text-secondary py-4">No facilities registered yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

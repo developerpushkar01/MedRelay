@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Facility dashboard{% endblock %}
+{% block content %}
+<div class="mb-4"><p class="eyebrow text-primary">{{ facility.facility_type }}</p><h1 class="h2 fw-bold">{{ facility.name }}</h1><p class="text-secondary mb-0">{{ facility.city }}, {{ facility.state }} · <span class="badge text-bg-success">{{ facility.status }}</span></p></div>
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Inventory batches</div><div class="stat-number">{{ inventory_count }}</div><a href="{{ url_for('inventory') }}" class="small">View inventory →</a></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Your medicine requests</div><div class="stat-number">{{ requests|length }}</div><a href="{{ url_for('requests_list') }}" class="small">View requests →</a></div></div>
+  <div class="col-md-4"><div class="stat-card"><div class="stat-label">Pending supply offers</div><div class="stat-number">{{ incoming_offers|length }}</div><span class="small text-secondary">Review them in your requests</span></div></div>
+</div>
+<div class="d-flex flex-wrap gap-2 mb-4">
+  <a class="btn btn-primary" href="{{ url_for('inventory_add') }}">+ Add inventory</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('medicines') }}">Medicine catalogue</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('request_new') }}">+ New medicine request</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('marketplace') }}">Find requests to help with</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('reports') }}">View reports</a>
+</div>
+<div class="row g-4">
+  <div class="col-lg-6"><div class="panel-card"><h2 class="h5 fw-bold">Recent requests</h2>{% if requests %}<div class="list-group list-group-flush">{% for r in requests %}<a class="list-group-item list-group-item-action px-0" href="{{ url_for('request_detail', request_id=r.id) }}"><div class="d-flex justify-content-between gap-2"><strong>{{ r.medicine.name }}</strong><span class="badge {{ 'text-bg-danger' if r.urgency == 'Critical' else ('text-bg-warning' if r.urgency == 'High' else 'text-bg-secondary') }}">{{ r.urgency }}</span></div><div class="small text-secondary">Requested {{ r.quantity_requested }} {{ r.medicine.unit }} · {{ r.status }}</div></a>{% endfor %}</div>{% else %}<p class="text-secondary mb-0">You have not created any requests yet.</p>{% endif %}</div></div>
+  <div class="col-lg-6"><div class="panel-card"><h2 class="h5 fw-bold">Transfers to action</h2>{% if outgoing_transfers %}<div class="list-group list-group-flush">{% for t in outgoing_transfers %}<a class="list-group-item list-group-item-action px-0" href="{{ url_for('request_detail', request_id=t.request_id) }}"><strong>{{ t.medicine_request.medicine.name }}</strong><div class="small text-secondary">{{ t.quantity }} {{ t.medicine_request.medicine.unit }} · {{ t.status }} · To {{ t.medicine_request.requesting_facility.name }}</div></a>{% endfor %}</div>{% else %}<p class="text-secondary mb-0">No outgoing transfers need action right now.</p>{% endif %}</div></div>
+</div>
+{% endblock %}

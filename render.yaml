@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: medrelay-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /health
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEMO_MODE
+        value: "1"
+      - key: SEED_DEMO_DATA
+        value: "1"

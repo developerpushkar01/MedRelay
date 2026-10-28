@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4"><div><h1 class="h2 fw-bold">Inventory</h1><p class="text-secondary mb-0">Batch-level stock. Available quantity excludes reservations and ineligible stock.</p></div><a class="btn btn-primary" href="{{ url_for('inventory_add') }}">+ Add inventory</a></div>
+<div class="panel-card p-0 table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Medicine / batch</th><th>Expiry</th><th>On hand</th><th>Reserved</th><th>Available</th><th>Condition</th><th>Last updated</th></tr></thead><tbody>
+{% for item in items %}<tr><td><strong>{{ item.medicine.name }}</strong><div class="small text-secondary">{{ item.medicine.strength }} {{ item.medicine.dosage_form }} · Batch {{ item.batch_number }}</div></td><td>{{ item.expiry_date.strftime('%d %b %Y') }}{% if item.expiry_date < today %}<span class="badge text-bg-danger ms-1">Expired</span>{% endif %}</td><td>{{ item.quantity_on_hand }} {{ item.medicine.unit }}</td><td>{{ item.reserved_quantity }}</td><td><strong>{{ item.available_quantity }}</strong></td><td><span class="badge {{ 'text-bg-success' if item.stock_condition == 'Usable' else 'text-bg-warning' }}">{{ item.stock_condition }}</span></td><td class="small text-secondary">{{ item.updated_at.strftime('%d %b %Y, %H:%M') }} UTC</td></tr>{% else %}<tr><td colspan="7" class="text-center text-secondary py-5">No inventory recorded yet. Add your first batch.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

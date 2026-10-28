@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Register facility{% endblock %}
+{% block content %}
+<div class="form-shell form-shell-wide">
+  <h1 class="h2 fw-bold">Register a facility</h1>
+  <p class="text-secondary">Your account will remain pending until an administrator reviews your facility details.</p>
+  <form method="post">
+    <h2 class="h5 section-title">Account details</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-md-6"><label class="form-label">Your full name *</label><input class="form-control" name="full_name" required maxlength="120"></div>
+      <div class="col-md-6"><label class="form-label">Work email *</label><input class="form-control" type="email" name="email" required></div>
+      <div class="col-12"><label class="form-label">Password *</label><input class="form-control" type="password" name="password" minlength="8" required><div class="form-text">At least 8 characters.</div></div>
+    </div>
+    <h2 class="h5 section-title">Facility details</h2>
+    <div class="row g-3">
+      <div class="col-md-8"><label class="form-label">Facility name *</label><input class="form-control" name="facility_name" required maxlength="160"></div>
+      <div class="col-md-4"><label class="form-label">Facility type *</label><select class="form-select" name="facility_type" required><option value="">Choose…</option>{% for ft in facility_types %}<option>{{ ft }}</option>{% endfor %}</select></div>
+      <div class="col-md-6"><label class="form-label">Registration/licence reference *</label><input class="form-control" name="registration_no" required><div class="form-text">Collected for manual review; not automatically verified.</div></div>
+      <div class="col-md-6"><label class="form-label">Street address *</label><input class="form-control" name="address" required></div>
+      <div class="col-md-4"><label class="form-label">City *</label><input class="form-control" name="city" required></div>
+      <div class="col-md-4"><label class="form-label">State *</label><input class="form-control" name="state" required></div>
+      <div class="col-md-4"><label class="form-label">PIN code *</label><input class="form-control" name="pincode" required pattern="[0-9]{6}" maxlength="6"></div>
+      <div class="col-md-6"><label class="form-label">Latitude (optional)</label><input class="form-control" type="number" step="any" name="latitude" placeholder="e.g. 18.5204"></div>
+      <div class="col-md-6"><label class="form-label">Longitude (optional)</label><input class="form-control" type="number" step="any" name="longitude" placeholder="e.g. 73.8567"></div>
+    </div>
+    <button class="btn btn-primary w-100 mt-4">Submit for review</button>
+  </form>
+</div>
+{% endblock %}
